@@ -7,6 +7,7 @@ const pool = require("./config/db");
 
 const authRoutes = require("./routes/authRoutes");
 const caseRoutes = require("./routes/caseRoutes");
+const evidenceRoutes = require("./routes/evidenceRoutes");
 
 console.log("DB_USER:", process.env.DB_USER);
 console.log("DB_NAME:", process.env.DB_NAME);
@@ -45,6 +46,7 @@ app.get("/db-test", async (req, res) => {
 });
 
 app.use("/api/cases", caseRoutes);
+app.use("/api/cases", evidenceRoutes);
 
 
 const PORT = process.env.PORT || 5000;
