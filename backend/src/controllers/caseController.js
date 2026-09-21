@@ -32,6 +32,32 @@ const createCase = async (req, res) => {
     }
 };
 
+const getCases = async (req, res) => {
+    try {
+        const userId = req.user.userId;
+
+        const result = await pool.query(
+            `SELECT case_id, title, description, status, created_at, updated_at
+             FROM cases
+             WHERE user_id = $1
+             ORDER BY created_at DESC`,
+            [userId]
+        );
+
+        res.status(200).json({
+            cases: result.rows
+        });
+
+    } catch (error) {
+        console.error("Get cases error:", error);
+
+        res.status(500).json({
+            message: "Server error"
+        });
+    }
+};
+
 module.exports = {
-    createCase
+    createCase,
+    getCases
 };
