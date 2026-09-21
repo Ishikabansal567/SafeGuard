@@ -13,7 +13,6 @@ const register = async (req, res) => {
         }
 
 
-
         const existingUser = await pool.query(
             "SELECT id FROM users WHERE email = $1",
             [email]
