@@ -2,9 +2,11 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
+
 const pool = require("./config/db");
 
 const authRoutes = require("./routes/authRoutes");
+const caseRoutes = require("./routes/caseRoutes");
 
 console.log("DB_USER:", process.env.DB_USER);
 console.log("DB_NAME:", process.env.DB_NAME);
@@ -42,9 +44,12 @@ app.get("/db-test", async (req, res) => {
     }
 });
 
+app.use("/api/cases", caseRoutes);
+
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
     console.log(`SafeCase server running on port ${PORT}`);
 });
+
