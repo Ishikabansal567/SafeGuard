@@ -1,6 +1,7 @@
+require("dotenv").config();
+console.log("JWT_SECRET exists:", !!process.env.JWT_SECRET);
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
 
 
 const pool = require("./config/db");

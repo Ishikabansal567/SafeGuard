@@ -1,4 +1,5 @@
 const pool = require("../config/db");
+const { processEvidenceWithAI } = require("../services/aiEvidenceService");
 
 const createEvidence = async (req, res) => {
     const client = await pool.connect();
@@ -91,6 +92,13 @@ const createEvidence = async (req, res) => {
         }
 
         await client.query("COMMIT");
+
+        for (const evidence of createdEvidence) {
+            if (evidence.type === "IMAGE") {
+                processEvidenceWithAI(evidence.evidence_id);
+            }
+        }
+
 
         res.status(201).json({
             message: "Evidence added successfully",
