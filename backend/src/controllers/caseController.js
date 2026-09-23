@@ -78,7 +78,7 @@ const getCaseById = async (req, res) => {
 
         // Get all evidence belonging to this case
         const evidenceResult = await pool.query(
-            `SELECT evidence_id, case_id, type, content, file_path, created_at
+            `SELECT evidence_id, case_id, type, content, file_path, extracted_data, created_at
              FROM evidence
              WHERE case_id = $1
              ORDER BY created_at ASC`,
