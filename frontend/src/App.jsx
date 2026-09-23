@@ -4,6 +4,7 @@ import "./App.css";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import CaseDetails from "./pages/CaseDetails";
 
 function Home() {
   return (
@@ -97,6 +98,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/cases/:caseId" element={<CaseDetails />} />
       </Routes>
     </BrowserRouter>
   );
