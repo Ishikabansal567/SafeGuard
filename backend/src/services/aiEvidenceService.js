@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const pool = require("../config/db");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { checkUrl } = require("./urlCheckService");
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
@@ -88,6 +89,23 @@ Rules:
             .trim();
 
         const extractedData = JSON.parse(cleanedResponse);
+
+        // 7. Check extracted URLs
+            const urlChecks = [];
+
+            if (extractedData.urls && extractedData.urls.length > 0) {
+                for (const url of extractedData.urls) {
+                    const result = await checkUrl(
+                        url.startsWith("http")
+                            ? url
+                            : `https://${url}`
+                    );
+
+                    urlChecks.push(result);
+                }
+            }
+
+            extractedData.url_checks = urlChecks;
 
         // 7. Save extracted data to PostgreSQL
         await pool.query(
